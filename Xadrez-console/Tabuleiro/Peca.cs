@@ -14,6 +14,7 @@ namespace tabuleiro
             Posicao = null;
             Cor = cor;
             Tab = tab;
+            QtdeMovimentos = 0;
         }
     }
 }
