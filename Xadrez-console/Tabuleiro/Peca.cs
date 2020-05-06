@@ -12,8 +12,8 @@ namespace tabuleiro
         public Peca(Tabuleiro tab, Cor cor)
         {
             Posicao = null;
-            Cor = cor;
             Tab = tab;
+            Cor = cor;
             QtdeMovimentos = 0;
         }
 
@@ -22,6 +22,10 @@ namespace tabuleiro
             QtdeMovimentos++;
         }
 
+        public void DecrementarQteMovimentos()
+        {
+            QtdeMovimentos--;
+        }
         public bool ExisteMovimentosPossiveis()
         {
             bool[,] mat = MovimentosPossiveis();
@@ -38,7 +42,7 @@ namespace tabuleiro
             return false;
         }
 
-        public bool PodeMoverPara(Posicao pos)
+        public bool MovimentoPossivel(Posicao pos)
         {
             return MovimentosPossiveis()[pos.Linha, pos.Coluna];
         }
