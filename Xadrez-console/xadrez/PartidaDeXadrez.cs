@@ -39,11 +39,11 @@ namespace xadrez
             }
 
             //JogadaEspecial roque pequeno
-            if(p is Rei && destino.Coluna == origem.Coluna + 2)
+            if (p is Rei && destino.Coluna == origem.Coluna + 2)
             {
                 Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna + 3);
                 Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
-                Peca Torre = Tab.RetirarPeca(origem);
+                Peca Torre = Tab.RetirarPeca(origemTorre);
                 Torre.IncrementarQteMovimentos();
                 Tab.ColocarPeca(Torre, destinoTorre);
             }
@@ -52,18 +52,18 @@ namespace xadrez
             {
                 Posicao origemTorre = new Posicao(origem.Linha, origem.Coluna - 4);
                 Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna - 1);
-                Peca Torre = Tab.RetirarPeca(origem);
+                Peca Torre = Tab.RetirarPeca(origemTorre);
                 Torre.IncrementarQteMovimentos();
                 Tab.ColocarPeca(Torre, destinoTorre);
             }
 
             //#JogadaEspecial En Passant
-            if(p is Peao)
+            if (p is Peao)
             {
                 if (origem.Coluna != destino.Coluna && PecaCapturada == null)
                 {
                     Posicao posPeao;
-                    if(p.Cor == Cor.Branca)
+                    if (p.Cor == Cor.Branca)
                     {
                         posPeao = new Posicao(destino.Linha + 1, destino.Coluna);
                     }
@@ -97,7 +97,7 @@ namespace xadrez
                 Posicao destinoTorre = new Posicao(origem.Linha, origem.Coluna + 1);
                 Peca Torre = Tab.RetirarPeca(destinoTorre);
                 Torre.DecrementarQteMovimentos();
-                Tab.ColocarPeca(Torre, destinoTorre);
+                Tab.ColocarPeca(Torre, origemTorre);
             }
             //JogadaEspecial roque grande
             if (p is Rei && destino.Coluna == origem.Coluna - 2)
@@ -109,9 +109,9 @@ namespace xadrez
                 Tab.ColocarPeca(Torre, origemTorre);
             }
             //JogadaEspecial En Passant
-            if(p is Peao)
+            if (p is Peao)
             {
-                if(origem.Coluna != destino.Coluna && pecaCapturada == VulneravelEnPassant)
+                if (origem.Coluna != destino.Coluna && pecaCapturada == VulneravelEnPassant)
                 {
                     Peca peao = Tab.RetirarPeca(destino);
                     Posicao posPeao;
@@ -142,7 +142,7 @@ namespace xadrez
             //#JogadaEspecial Promoção
             if (p is Peao)
             {
-                if ((p.Cor== Cor.Branca && destino.Linha==0)|| (p.Cor == Cor.Preta && destino.Linha == 7))
+                if ((p.Cor == Cor.Branca && destino.Linha == 0) || (p.Cor == Cor.Preta && destino.Linha == 7))
                 {
                     p = Tab.RetirarPeca(destino);
                     Pecas.Remove(p);
@@ -172,7 +172,7 @@ namespace xadrez
             //#JogadaEspecial En Passant
             if (p is Peao && (destino.Linha == origem.Linha - 2 || destino.Linha == origem.Linha + 2))
             {
-               VulneravelEnPassant = p;
+                VulneravelEnPassant = p;
             }
             else
             {
@@ -240,7 +240,7 @@ namespace xadrez
             aux.ExceptWith(PecasCapturadas(cor));
             return aux;
         }
-    
+
         private Cor Adversaria(Cor cor)
         {
             if (cor == Cor.Branca)
@@ -253,11 +253,11 @@ namespace xadrez
             }
         }
 
-        private Peca Rei (Cor cor)
+        private Peca Rei(Cor cor)
         {
-            foreach(Peca x in PecasEmJogo(cor))
+            foreach (Peca x in PecasEmJogo(cor))
             {
-                if(x is Rei)
+                if (x is Rei)
                 {
                     return x;
                 }
@@ -270,7 +270,7 @@ namespace xadrez
             Peca R = Rei(cor);
             if (R == null)
             {
-                throw new TabuleiroException("Não tem rei na cor " + cor +" no tabuleiro" );
+                throw new TabuleiroException("Não tem rei na cor " + cor + " no tabuleiro");
             }
             foreach (Peca x in PecasEmJogo(Adversaria(cor)))
             {
@@ -292,9 +292,9 @@ namespace xadrez
             foreach (Peca x in PecasEmJogo(cor))
             {
                 bool[,] mat = x.MovimentosPossiveis();
-                for (int i = 0;  i < Tab.Linhas; i++)
+                for (int i = 0; i < Tab.Linhas; i++)
                 {
-                    for (int j =0; j< Tab.Colunas; j++)
+                    for (int j = 0; j < Tab.Colunas; j++)
                     {
                         if (mat[i, j])
                         {
